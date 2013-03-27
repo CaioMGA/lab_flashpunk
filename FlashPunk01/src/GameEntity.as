@@ -3,6 +3,7 @@ package
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.FP;
+	import net.flashpunk.graphics.Spritemap;
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
 	/**
@@ -11,22 +12,42 @@ package
 	 */
 	public class GameEntity extends Entity
 	{
-		[Embed(source="../lib/0.png")]
-		private const IMAGE:Class;
+		[Embed(source="../lib/icaro_sprite_5x1.png")]
+		private const SHEET:Class;
+		
+		private var _timeInterval:Number;
 		
 		public function GameEntity() 
 		{
-			graphic = new Image(IMAGE);
+			graphic = new Spritemap(SHEET, 32, 32, onAnimationEnd);
+			Spritemap(graphic).add("Stopped", [0]);//mexer nisso depois
+			Spritemap(graphic).add("Flying", [0, 1, 2, 3, 4], 8);
 			
 			//customizing Keys on flashpunk
 			Input.define("UP", Key.W, Key.UP);
 			Input.define("DOWN", Key.S, Key.DOWN);
 			Input.define("LEFT", Key.A, Key.LEFT);
 			Input.define("RIGHT", Key.D, Key.RIGHT);
+			
+			type = "GameEntity";
+			Spritemap(graphic).play("Flying");
 		}
+		private function onAnimationEnd():void
+		{
+			Spritemap(graphic).play("Stopped");
+			_timeInterval = 0;
+		}
+		
 		
 		override public function update():void
 		{
+			_timeInterval += FP.elapsed;
+			
+			if (_timeInterval >= 0.2)
+			{
+				Spritemap(graphic).play("Flying");
+			}
+			
 			//not so effective cheking keys technique
 			//if (Input.check(Key.A) || Input.check(Key.LEFT))
 			//{
@@ -62,6 +83,17 @@ package
 			{
 				x += 50 * FP.elapsed;
 			}
+		}
+		
+		override public function added():void
+		{
+			trace("The entity has been added to the world");
+			trace("Entity in the world: " + world.count);
+		}
+		
+		override public function removed():void
+		{
+			trace("The entity has been removed from the world!");
 		}
 		
 	}

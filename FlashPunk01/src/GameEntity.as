@@ -31,6 +31,8 @@ package
 			
 			type = "GameEntity";
 			Spritemap(graphic).play("Flying");
+			
+			setHitbox(32, 32);
 		}
 		private function onAnimationEnd():void
 		{

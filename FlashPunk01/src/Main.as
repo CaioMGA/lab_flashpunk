@@ -21,6 +21,9 @@ package
 		{
 			trace("The game has started! lol");
 			FP.world = _gameWorld;
+			//console com FPS, e outras informações úteis
+			FP.console.enable();
+			FP.log("Começou o Jogo!");
 		}
 	}
 

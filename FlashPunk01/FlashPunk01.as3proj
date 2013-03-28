@@ -70,6 +70,8 @@
     <asset path="lib\0.png" />
     <asset path="lib\1.png" />
     <asset path="lib\icaro_sprite_5x1.png" />
+    <asset path="lib\wall.png" />
+    <asset path="lib\button.png" />
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
